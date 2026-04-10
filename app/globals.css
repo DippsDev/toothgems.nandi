@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'GreatVibes';
+  src: url('/fonts/Great_Vibes/GreatVibes-Regular.ttf') format('truetype');
+  font-display: swap;
+}
+
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #ffffff;
 }
 
 @theme inline {
@@ -14,13 +20,150 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #ffffff;
+    --foreground: #ffffff;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  margin: 0;
+  background: #ffffff;
+  color: #111827;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+/* Modal backdrop */
+@keyframes modal-backdrop-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-backdrop-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+/* Mobile — slide up from bottom */
+@keyframes sheet-in {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes sheet-out {
+  from {
+    transform: translateY(0);
+  }
+
+  to {
+    transform: translateY(100%);
+  }
+}
+
+/* Desktop — fade + subtle scale */
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modal-out {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.96) translateY(8px);
+  }
+}
+
+.modal-backdrop-enter {
+  animation: modal-backdrop-in 260ms ease forwards;
+}
+
+.modal-backdrop-exit {
+  animation: modal-backdrop-out 220ms ease forwards;
+}
+
+/* Base state — off-screen on mobile, invisible on desktop */
+.modal-sheet {
+  will-change: transform;
+  transform: translateY(100%);
+}
+
+.modal-sheet-enter {
+  animation: sheet-in 380ms cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+.modal-sheet-exit {
+  animation: sheet-out 300ms cubic-bezier(0.32, 0.72, 0, 1) forwards;
+}
+
+@media (min-width: 640px) {
+  .modal-sheet {
+    will-change: opacity, transform;
+    transform: none;
+    opacity: 0;
+  }
+
+  .modal-sheet-enter {
+    animation: modal-in 240ms cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  }
+
+  .modal-sheet-exit {
+    animation: modal-out 200ms cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  }
+}
+
+/* Step panel — slides up each time a new step mounts inside the sheet */
+@keyframes step-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.step-panel {
+  animation: step-in 280ms cubic-bezier(0.32, 0.72, 0, 1) both;
 }
