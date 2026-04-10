@@ -67,8 +67,12 @@ export default function BookingPage() {
     useEffect(() => {
         if (!selectedDate || !slug) return;
         fetch(`/api/bookings?date=${selectedDate}&slug=${slug}`)
-            .then(r => r.json())
-            .then(data => setBookedTimes(data.bookedTimes ?? []));
+            .then(r => {
+                if (!r.ok) throw new Error("Failed to fetch availability");
+                return r.json();
+            })
+            .then(data => setBookedTimes(data.bookedTimes ?? []))
+            .catch(() => setBookedTimes([]));
     }, [selectedDate, slug]);
 
     const submitBooking = async () => {
