@@ -47,6 +47,9 @@ export default function BookingPage() {
     const [selectedTime, setSelectedTime] = useState<string | null>(null);
     const [contact, setContact] = useState({ name: "", phone: "", email: "" });
     const [bookingRef] = useState(() => "DF-" + Math.random().toString(36).slice(2, 7).toUpperCase());
+    const [bookedTimes, setBookedTimes] = useState<string[]>([]);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitError, setSubmitError] = useState<string | null>(null);
 
     const [modalVisible, setModalVisible] = useState(false);
     const [modalAnimating, setModalAnimating] = useState<"enter" | "exit" | null>(null);
@@ -59,6 +62,43 @@ export default function BookingPage() {
             });
         }
     }, [showModal]);
+
+    // Fetch already-booked time slots when a date is selected
+    useEffect(() => {
+        if (!selectedDate || !slug) return;
+        fetch(`/api/bookings?date=${selectedDate}&slug=${slug}`)
+            .then(r => r.json())
+            .then(data => setBookedTimes(data.bookedTimes ?? []));
+    }, [selectedDate, slug]);
+
+    const submitBooking = async () => {
+        setIsSubmitting(true);
+        setSubmitError(null);
+        try {
+            const res = await fetch("/api/bookings", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    booking_ref: bookingRef,
+                    service_slug: slug,
+                    items: selectedItems.map(i => ({ title: i.title, price: i.price })),
+                    total,
+                    date: selectedDate,
+                    time: selectedTime,
+                    name: contact.name,
+                    phone: contact.phone,
+                    email: contact.email,
+                }),
+            });
+            const data = await res.json();
+            if (!res.ok) throw new Error(data.error ?? "Booking failed");
+            setStep("booked");
+        } catch (err: unknown) {
+            setSubmitError(err instanceof Error ? err.message : "Something went wrong");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     const closeModal = () => {
         setModalAnimating("exit");
@@ -273,15 +313,23 @@ export default function BookingPage() {
                                     {selectedDate && new Date(selectedDate + "T00:00:00").toLocaleDateString("en-ZA", { weekday: "long", day: "numeric", month: "long", year: "numeric" })}
                                 </p>
                                 <div className="grid grid-cols-3 gap-3 mb-8">
-                                    {timeSlots.map((slot) => (
-                                        <button
-                                            key={slot}
-                                            onClick={() => setSelectedTime(slot)}
-                                            className={`py-2.5 rounded-lg border text-sm font-medium transition-colors ${selectedTime === slot ? "bg-gray-900 text-white border-gray-900" : "border-gray-200 text-gray-700 hover:bg-gray-50"}`}
-                                        >
-                                            {slot}
-                                        </button>
-                                    ))}
+                                    {timeSlots.map((slot) => {
+                                        const isBooked = bookedTimes.includes(slot);
+                                        const isChosen = selectedTime === slot;
+                                        return (
+                                            <button
+                                                key={slot}
+                                                disabled={isBooked}
+                                                onClick={() => setSelectedTime(slot)}
+                                                className={`py-2.5 rounded-lg border text-sm font-medium transition-colors
+                                                    ${isChosen ? "bg-gray-900 text-white border-gray-900" : ""}
+                                                    ${!isChosen && !isBooked ? "border-gray-200 text-gray-700 hover:bg-gray-50" : ""}
+                                                    ${isBooked ? "border-gray-100 text-gray-300 line-through cursor-not-allowed" : ""}`}
+                                            >
+                                                {slot}
+                                            </button>
+                                        );
+                                    })}
                                 </div>
                                 <button disabled={!selectedTime} onClick={() => setStep("contact")} className="w-full py-3 rounded-full bg-[#2d2d2d] text-white text-sm font-medium hover:bg-[#1a1a1a] transition-colors disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed">
                                     Confirm Time
@@ -357,8 +405,15 @@ export default function BookingPage() {
                                         {contact.email && <div className="flex justify-between text-sm py-2.5"><span className="text-gray-400">Email</span><span className="text-gray-700">{contact.email}</span></div>}
                                     </div>
                                 </div>
-                                <button onClick={() => setStep("booked")} className="w-full py-3 rounded-full bg-[#2d2d2d] text-white text-sm font-medium hover:bg-[#1a1a1a] transition-colors">
-                                    Book Now
+                                {submitError && (
+                                    <p className="text-red-500 text-xs mb-3 text-center">{submitError}</p>
+                                )}
+                                <button
+                                    onClick={submitBooking}
+                                    disabled={isSubmitting}
+                                    className="w-full py-3 rounded-full bg-[#2d2d2d] text-white text-sm font-medium hover:bg-[#1a1a1a] transition-colors disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed"
+                                >
+                                    {isSubmitting ? "Booking..." : "Book Now"}
                                 </button>
                             </div>
                         )}
