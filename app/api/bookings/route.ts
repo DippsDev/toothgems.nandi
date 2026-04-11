@@ -1,10 +1,13 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
+import { sendReceiptEmail, sendClientWhatsApp, sendProviderWhatsApp } from "@/lib/notifications";
 
-const supabase = createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
-);
+function getSupabase() {
+    return createClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL!,
+        process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+    );
+}
 
 export async function POST(req: NextRequest) {
     try {
@@ -14,6 +17,8 @@ export async function POST(req: NextRequest) {
         if (!booking_ref || !service_slug || !items || !date || !time || !name || !phone) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
         }
+
+        const supabase = getSupabase();
 
         const { error } = await supabase.from("bookings").insert({
             booking_ref,
@@ -32,6 +37,14 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: error.message }, { status: 500 });
         }
 
+        // Fire notifications — don't block the response if they fail
+        const notificationPayload = { name, booking_ref, date, time, items, total };
+        await Promise.allSettled([
+            email ? sendReceiptEmail(email, notificationPayload) : Promise.resolve(),
+            sendClientWhatsApp(phone, notificationPayload),
+            sendProviderWhatsApp(notificationPayload),
+        ]);
+
         return NextResponse.json({ success: true });
     } catch (err) {
         console.error("Unexpected error:", err);
@@ -48,6 +61,8 @@ export async function GET(req: NextRequest) {
         if (!date || !slug) {
             return NextResponse.json({ error: "Missing date or slug" }, { status: 400 });
         }
+
+        const supabase = getSupabase();
 
         const { data, error } = await supabase
             .from("bookings")
