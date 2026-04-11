@@ -436,7 +436,7 @@ export default function BookingPage() {
                                     <p>🕐 {selectedTime}</p>
                                     <p>💎 {selectedItems.map(i => i.title).join(", ")}</p>
                                 </div>
-                                <p className="text-sm text-gray-500 mb-8">A confirmation email has been sent to <span className="font-medium text-gray-700">{contact.email}</span>. We&apos;ll also WhatsApp you on <span className="font-medium text-gray-700">{contact.phone}</span> to confirm.</p>
+                                <p className="text-sm text-gray-500 mb-8">A confirmation email has been sent to <span className="font-medium text-gray-700">{contact.email}</span>.</p>
                                 <button
                                     onClick={() => { closeModal(); setSelectedDate(null); setSelectedTime(null); setContact({ name: "", phone: "", email: "" }); setSelected(new Set()); }}
                                     className="w-full py-3 rounded-full bg-[#2d2d2d] text-white text-sm font-medium hover:bg-[#1a1a1a] transition-colors"
