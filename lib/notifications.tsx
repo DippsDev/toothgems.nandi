@@ -3,9 +3,6 @@ import { Resend } from "resend";
 import twilio from "twilio";
 import { EmailTemplate } from "@/components/email-template";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
-
 interface BookingDetails {
     name: string;
     booking_ref: string;
@@ -16,15 +13,17 @@ interface BookingDetails {
 }
 
 export async function sendReceiptEmail(to: string, booking: BookingDetails) {
+    const resend = new Resend(process.env.RESEND_API_KEY);
     await resend.emails.send({
         from: "Tooth Gems by Nandi <bookings@yourdomain.com>",
         to,
         subject: `Booking Confirmed — ${booking.booking_ref}`,
-        react: <EmailTemplate { ...booking } />,
+        react: <EmailTemplate {...booking} />,
     });
 }
 
 export async function sendClientWhatsApp(phone: string, booking: BookingDetails) {
+    const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
     await twilioClient.messages.create({
         from: process.env.TWILIO_WHATSAPP_FROM!,
         to: `whatsapp:${phone}`,
@@ -33,6 +32,7 @@ export async function sendClientWhatsApp(phone: string, booking: BookingDetails)
 }
 
 export async function sendProviderWhatsApp(booking: BookingDetails) {
+    const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
     const itemsList = booking.items.map(i => i.title).join(", ");
 
     await twilioClient.messages.create({
