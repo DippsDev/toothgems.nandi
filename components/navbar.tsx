@@ -5,7 +5,6 @@ import { useMenu } from "./menu-context";
 
 const navLinks = [
   { label: "Services", href: "/" },
-  { label: "Gallery", href: "/gallery" },
   { label: "Feedback", href: "/about" },
 ];
 
@@ -86,9 +85,6 @@ export default function NavBar() {
               )}
             </div>
 
-            <a href="/gallery" className="px-4 py-2 text-sm text-white/80 hover:text-white transition-colors rounded-lg hover:bg-white/10">
-              Gallery
-            </a>
             <a href="/about" className="px-4 py-2 text-sm text-white/80 hover:text-white transition-colors rounded-lg hover:bg-white/10">
               Feedback
             </a>
