@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
-import { sendReceiptEmail, sendClientWhatsApp, sendProviderWhatsApp } from "@/lib/notifications";
+import { sendReceiptEmail, sendClientWhatsApp, sendProviderEmail } from "@/lib/notifications";
 
 function getSupabase() {
     return createClient(
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
         await Promise.allSettled([
             email ? sendReceiptEmail(email, notificationPayload) : Promise.resolve(),
             sendClientWhatsApp(phone, notificationPayload),
-            sendProviderWhatsApp(notificationPayload),
+            sendProviderEmail(notificationPayload),
         ]);
 
         return NextResponse.json({ success: true });
