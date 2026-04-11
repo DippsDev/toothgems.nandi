@@ -362,11 +362,11 @@ export default function BookingPage() {
                                         <input type="tel" placeholder="+267 99 999 999" value={contact.phone} onChange={(e) => setContact(c => ({ ...c, phone: e.target.value }))} className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-300 focus:outline-none focus:border-gray-400 transition-colors" />
                                     </div>
                                     <div>
-                                        <label className="block text-xs text-gray-500 mb-1">Email <span className="text-gray-300">(optional)</span></label>
+                                        <label className="block text-xs text-gray-500 mb-1">Email</label>
                                         <input type="email" placeholder="jane@example.com" value={contact.email} onChange={(e) => setContact(c => ({ ...c, email: e.target.value }))} className="w-full border border-gray-200 rounded-lg px-4 py-2.5 text-sm text-gray-800 placeholder-gray-300 focus:outline-none focus:border-gray-400 transition-colors" />
                                     </div>
                                 </div>
-                                <button disabled={!contact.name.trim() || !contact.phone.trim()} onClick={() => setStep("confirm")} className="w-full py-3 rounded-full bg-[#2d2d2d] text-white text-sm font-medium hover:bg-[#1a1a1a] transition-colors disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed">
+                                <button disabled={!contact.name.trim() || !contact.phone.trim() || !contact.email.trim()} onClick={() => setStep("confirm")} className="w-full py-3 rounded-full bg-[#2d2d2d] text-white text-sm font-medium hover:bg-[#1a1a1a] transition-colors disabled:bg-gray-200 disabled:text-gray-400 disabled:cursor-not-allowed">
                                     Confirm Booking
                                 </button>
                             </div>
@@ -436,7 +436,7 @@ export default function BookingPage() {
                                     <p>🕐 {selectedTime}</p>
                                     <p>💎 {selectedItems.map(i => i.title).join(", ")}</p>
                                 </div>
-                                <p className="text-sm text-gray-500 mb-8">We&apos;ll WhatsApp you on <span className="font-medium text-gray-700">{contact.phone}</span> to confirm your appointment.</p>
+                                <p className="text-sm text-gray-500 mb-8">A confirmation email has been sent to <span className="font-medium text-gray-700">{contact.email}</span>. We&apos;ll also WhatsApp you on <span className="font-medium text-gray-700">{contact.phone}</span> to confirm.</p>
                                 <button
                                     onClick={() => { closeModal(); setSelectedDate(null); setSelectedTime(null); setContact({ name: "", phone: "", email: "" }); setSelected(new Set()); }}
                                     className="w-full py-3 rounded-full bg-[#2d2d2d] text-white text-sm font-medium hover:bg-[#1a1a1a] transition-colors"
