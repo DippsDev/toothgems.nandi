@@ -5,32 +5,20 @@ import { useParams, useRouter } from "next/navigation";
 
 const services: Record<string, { title: string; price: string; description: string }[]> = {
     "basic-gem": [
-        { title: "Single Gem", price: "R250", description: "One crystal gem applied to a single tooth." },
-        { title: "Two Gems", price: "R400", description: "Two gems placed on adjacent teeth." },
-        { title: "Three Gems", price: "R550", description: "Three gems for a sparkling smile." },
-    ],
-    "cross-butterfly": [
-        { title: "Cross Set", price: "R350", description: "A delicate cross design applied to your tooth." },
-        { title: "Butterfly Set", price: "R350", description: "A butterfly design for a unique look." },
-        { title: "Cross + Butterfly Combo", price: "R600", description: "Both designs on separate teeth." },
-    ],
-    "grill-design": [
-        { title: "Single Tooth Grill", price: "R800", description: "Custom grill fitted to one tooth." },
-        { title: "Two Tooth Grill", price: "R1400", description: "Grill design spanning two teeth." },
-        { title: "Full Front Grill", price: "R2500", description: "Full front grill for maximum impact." },
+        { title: "Basic Dazzled Set", price: "P150", description: "A classic crystal gem set applied to your tooth." },
     ],
     "custom-design": [
-        { title: "Consultation + Design", price: "R200", description: "Sit down with us to plan your custom look." },
-        { title: "Custom Single Gem", price: "R500", description: "Fully custom gem placement of your choice." },
-        { title: "Custom Full Set", price: "R1200", description: "A completely bespoke full set design." },
+        { title: "Custom Dazzled Set", price: "P250+", description: "A fully custom gem design tailored to your style. Price varies based on complexity." },
+    ],
+    "grill-design": [
+        { title: "Grill Design with Gems", price: "P300", description: "A grill design with gems for maximum sparkle and impact." },
     ],
 };
 
 const slugToLabel: Record<string, string> = {
-    "basic-gem": "Basic Gem on Tooth",
-    "cross-butterfly": "Cross or Butterfly Set",
-    "grill-design": "Grill Design",
-    "custom-design": "Custom Design",
+    "basic-gem": "Basic Dazzled Set",
+    "custom-design": "Custom Dazzled Set",
+    "grill-design": "Grill Design with Gems",
 };
 
 export default function BookingPage() {
