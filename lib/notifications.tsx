@@ -2,6 +2,7 @@ import nodemailer from "nodemailer";
 
 interface BookingDetails {
     name: string;
+    phone: string;
     booking_ref: string;
     date: string;
     time: string;
@@ -50,7 +51,7 @@ export async function sendReceiptEmail(to: string, booking: BookingDetails) {
                         ${itemRows}
                         <tr>
                             <td style="padding-top:12px;font-size:15px;font-weight:700">Total</td>
-                            <td style="padding-top:12px;font-size:15px;font-weight:700;text-align:right">R${booking.total}</td>
+                            <td style="padding-top:12px;font-size:15px;font-weight:700;text-align:right">P${booking.total}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -92,6 +93,7 @@ export async function sendProviderEmail(booking: BookingDetails) {
                     <p style="margin:0 0 8px;font-size:13px;color:#888">BOOKING REFERENCE</p>
                     <p style="margin:0 0 16px;font-size:18px;font-weight:700">${booking.booking_ref}</p>
                     <p style="margin:0 0 8px;font-size:14px">👤 <strong>Client:</strong> ${booking.name}</p>
+                    <p style="margin:0 0 8px;font-size:14px">📞 <strong>Phone:</strong> <a href="tel:${booking.phone}" style="color:#141414">${booking.phone}</a></p>
                     <p style="margin:0;font-size:14px">📅 ${booking.date} at ${booking.time}</p>
                 </div>
                 <table style="width:100%;border-collapse:collapse;margin-bottom:16px">
@@ -105,7 +107,7 @@ export async function sendProviderEmail(booking: BookingDetails) {
                         ${itemRows}
                         <tr>
                             <td style="padding-top:12px;font-size:15px;font-weight:700">Total</td>
-                            <td style="padding-top:12px;font-size:15px;font-weight:700;text-align:right">R${booking.total}</td>
+                            <td style="padding-top:12px;font-size:15px;font-weight:700;text-align:right">P${booking.total}</td>
                         </tr>
                     </tbody>
                 </table>

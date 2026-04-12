@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
         }
 
         // Fire notifications — don't block the response if they fail
-        const notificationPayload = { name, booking_ref, date, time, items, total };
+        const notificationPayload = { name, phone, booking_ref, date, time, items, total };
         await Promise.allSettled([
             email ? sendReceiptEmail(email, notificationPayload) : Promise.resolve(),
             sendClientWhatsApp(phone, notificationPayload),

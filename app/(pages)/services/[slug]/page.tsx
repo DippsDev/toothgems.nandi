@@ -204,7 +204,7 @@ export default function BookingPage() {
                             </div>
                             <div className="flex justify-between text-sm font-medium text-white mb-6 border-t border-white/10 pt-4">
                                 <span>Total</span>
-                                <span>{selectedItems.length > 0 ? `R${total}` : "free"}</span>
+                                <span>{selectedItems.length > 0 ? `P${total}` : "free"}</span>
                             </div>
                             <button
                                 disabled={selectedItems.length === 0}
@@ -244,7 +244,7 @@ export default function BookingPage() {
                                 </div>
                                 <div className="flex justify-between text-sm font-semibold text-gray-900 mb-8 border-t border-gray-100 pt-4">
                                     <span>Total</span>
-                                    <span>R{total}</span>
+                                    <span>P{total}</span>
                                 </div>
                                 <button onClick={() => setStep("date")} className="w-full py-3 rounded-full bg-[#2d2d2d] text-white text-sm font-medium hover:bg-[#1a1a1a] transition-colors">
                                     Add to booking
@@ -379,7 +379,7 @@ export default function BookingPage() {
                                     </div>
                                     <div className="flex justify-between text-sm font-semibold text-gray-900 border-t border-gray-100 mt-3 pt-3">
                                         <span>Total</span>
-                                        <span>R{total}</span>
+                                        <span>P{total}</span>
                                     </div>
                                 </div>
                                 <div className="border-t border-gray-100 pt-4 mb-4">

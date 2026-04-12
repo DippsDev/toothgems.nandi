@@ -47,7 +47,7 @@ export const EmailTemplate: React.FC<EmailTemplateProps> = ({
                     ))}
                     <tr>
                         <td style={{ paddingTop: 12, fontSize: 15, fontWeight: 700 }}>Total</td>
-                        <td style={{ paddingTop: 12, fontSize: 15, fontWeight: 700, textAlign: "right" }}>R{total}</td>
+                        <td style={{ paddingTop: 12, fontSize: 15, fontWeight: 700, textAlign: "right" }}>P{total}</td>
                     </tr>
                 </tbody>
             </table>
