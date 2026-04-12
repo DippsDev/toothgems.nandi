@@ -88,7 +88,7 @@ export default function NavBar() {
             <a href="/about" className="px-4 py-2 text-sm text-white/80 hover:text-white transition-colors rounded-lg hover:bg-white/10">
               Feedback
             </a>
-            <a href="/contact" className="ml-2 px-4 py-2 text-sm text-white/80 hover:text-white transition-colors rounded-lg border border-white/30 hover:bg-white/10">
+            <a href="https://wa.me/26775362329" target="_blank" rel="noopener noreferrer" className="ml-2 px-4 py-2 text-sm text-white/80 hover:text-white transition-colors rounded-lg border border-white/30 hover:bg-white/10">
               Contact
             </a>
           </div>
@@ -140,7 +140,9 @@ export default function NavBar() {
               ))}
             </nav>
             <a
-              href="/contact"
+              href="https://wa.me/26775362329"
+              target="_blank"
+              rel="noopener noreferrer"
               className="block rounded-xl px-4 py-3 text-sm text-white hover:bg-white/15 border-t border-white/50 pt-4 mt-4"
               onClick={() => setIsOpen(false)}
             >
