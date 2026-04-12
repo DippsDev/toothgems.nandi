@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { useMenu } from "./menu-context";
 
 const navLinks = [
-  { label: "Services", href: "/" },
+  { label: "Bookings", href: "/" },
   { label: "Feedback", href: "/about" },
 ];
 
@@ -59,7 +59,7 @@ export default function NavBar() {
                 onClick={() => setDesktopServicesOpen((v) => !v)}
                 className="flex items-center gap-1 px-4 py-2 text-sm text-white/80 hover:text-white transition-colors rounded-lg hover:bg-white/10"
               >
-                Services
+                Bookings
                 <svg
                   className={`w-3.5 h-3.5 transition-transform duration-200 ${desktopServicesOpen ? "rotate-180" : ""}`}
                   fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}
@@ -96,16 +96,18 @@ export default function NavBar() {
       </div>
 
       {/* Overlay backdrop — mobile only */}
-      {isOpen && (
-        <div
-          className="md:hidden fixed inset-0 z-10 bg-black/10"
-          onClick={() => {
-            setIsOpen(false);
-            setIsServicesOpen(false);
-          }}
-          aria-hidden="true"
-        />
-      )}
+      {
+        isOpen && (
+          <div
+            className="md:hidden fixed inset-0 z-10 bg-black/10"
+            onClick={() => {
+              setIsOpen(false);
+              setIsServicesOpen(false);
+            }}
+            aria-hidden="true"
+          />
+        )
+      }
 
       {/* Side slider menu — mobile only */}
       <div
@@ -127,7 +129,7 @@ export default function NavBar() {
                   href={link.href}
                   className="block rounded-xl px-4 py-3 text-sm text-white hover:bg-white/15"
                   onClick={(e) => {
-                    if (link.label === "Services") {
+                    if (link.label === "Bookings") {
                       e.preventDefault();
                       setIsServicesOpen(true);
                     } else {
@@ -158,7 +160,7 @@ export default function NavBar() {
             >
               ← Back
             </button>
-            <h2 className="text-white text-lg font-semibold mb-2">Services</h2>
+            <h2 className="text-white text-lg font-semibold mb-2">Bookings</h2>
             <div className="flex flex-col">
               {serviceLinks.map((link) => (
                 <a
@@ -174,6 +176,6 @@ export default function NavBar() {
           </div>
         </div>
       </div>
-    </nav>
+    </nav >
   );
 }

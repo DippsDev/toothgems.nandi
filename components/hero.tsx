@@ -6,7 +6,9 @@ export default function Hero() {
   const { isOpen } = useMenu();
 
   return (
-    <main className="relative min-h-screen w-full bg-[url('/hero-mobile.webp')] md:bg-[url('/hero-desktop.webp')] bg-cover bg-center bg-no-repeat bg-black">
+    <main className="relative w-full bg-[url('/hero-mobile.webp')] md:bg-[url('/hero-desktop.webp')] bg-cover bg-center bg-no-repeat bg-black"
+      style={{ minHeight: '100dvh' }}
+    >
       <div className="absolute inset-0 bg-black/50 flex items-center justify-center px-4">
         <h1
           className="text-white text-4xl md:text-6xl font-bold text-center animate-fade-in"
