@@ -6,8 +6,15 @@ export default function Hero() {
   const { isOpen } = useMenu();
 
   return (
-    <main className="relative w-full bg-[url('/hero-mobile.webp')] md:bg-[url('/hero-desktop.webp')] bg-cover bg-center bg-no-repeat bg-black"
-      style={{ minHeight: '100dvh' }}
+    <main
+      className="relative w-full bg-[url('/hero-mobile.webp')] md:bg-[url('/hero-desktop.webp')] bg-cover bg-center bg-no-repeat bg-black"
+      style={{
+        minHeight: '100dvh',
+        marginTop: 'calc(-1 * env(safe-area-inset-top))',
+        marginBottom: 'calc(-1 * env(safe-area-inset-bottom))',
+        paddingTop: 'env(safe-area-inset-top)',
+        paddingBottom: 'env(safe-area-inset-bottom)',
+      }}
     >
       <div className="absolute inset-0 bg-black/50 flex items-center justify-center px-4">
         <h1
