@@ -6,7 +6,7 @@ export default function Hero() {
   const { isOpen } = useMenu();
 
   return (
-    <main className="relative min-h-screen w-full bg-[url('/Copilot_20260408_181643.png')] bg-cover bg-center bg-no-repeat bg-gray-500">
+    <main className="relative min-h-screen w-full bg-[url('/hero-mobile.webp')] md:bg-[url('/hero-desktop.webp')] bg-cover bg-center bg-no-repeat bg-black">
       <div className="absolute inset-0 bg-black/50 flex items-center justify-center px-4">
         <h1
           className="text-white text-4xl md:text-6xl font-bold text-center animate-fade-in"

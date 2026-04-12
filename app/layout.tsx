@@ -29,6 +29,12 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-screen antialiased`}
     >
+      <head>
+        {/* Preload mobile hero image */}
+        <link rel="preload" as="image" href="/hero-mobile.webp" media="(max-width: 767px)" />
+        {/* Preload desktop hero image */}
+        <link rel="preload" as="image" href="/hero-desktop.webp" media="(min-width: 768px)" />
+      </head>
       <body className="flex flex-col min-h-screen">
         <MenuProvider>
           <NavBar />
