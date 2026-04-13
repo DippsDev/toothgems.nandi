@@ -66,14 +66,16 @@ export async function GET(req: NextRequest) {
 
         const { data, error } = await supabase
             .from("bookings")
-            .select("time")
+            .select("time, status")
             .eq("date", date)
-            .eq("service_slug", slug);
+            .eq("service_slug", slug)
+            .in("status", ["pending", "confirmed", "unavailable"]);
 
         if (error) {
             return NextResponse.json({ error: error.message }, { status: 500 });
         }
 
+        // Block times that are pending, confirmed, or explicitly unavailable
         const bookedTimes = (data ?? []).map((b: { time: string }) => b.time);
         return NextResponse.json({ bookedTimes });
     } catch (err) {
