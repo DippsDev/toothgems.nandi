@@ -155,7 +155,9 @@ export async function sendAvailabilityUpdateEmail(
                 <p style="font-size:16px;margin-top:0">Hi ${booking.name},</p>
                 ${isConfirmed
                 ? `<p style="font-size:15px;color:#444">Great news — your appointment has been <strong>confirmed</strong>. We'll see you on <strong>${booking.date} at ${booking.time}</strong>.</p>`
-                : `<p style="font-size:15px;color:#444">Unfortunately, the provider is <strong>not available</strong> on <strong>${booking.date} at ${booking.time}</strong>. Please visit the website to book a different date and time.</p>`
+                : `<p style="font-size:15px;color:#444">Unfortunately, Nandi is not available on <strong>${booking.date} at ${booking.time}</strong>.</p>
+                   <p style="font-size:15px;color:#444">You're welcome to <a href="https://toothgems-nandi.vercel.app" style="color:#141414;font-weight:600">visit the website</a> and pick a new date and time that works for you — or sit tight and Nandi will reach out directly to find a slot that works for both of you.</p>
+                   <p style="font-size:14px;color:#888">We're sorry for the inconvenience and appreciate your patience. 💎</p>`
             }
                 <div style="background:#f9f9f9;border-radius:8px;padding:16px 20px;margin:20px 0">
                     <p style="margin:0 0 8px;font-size:13px;color:#888">BOOKING REFERENCE</p>

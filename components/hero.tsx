@@ -16,7 +16,7 @@ export default function Hero() {
         paddingBottom: 'env(safe-area-inset-bottom)',
       }}
     >
-      <div className="absolute inset-0 bg-black/50 flex items-center justify-center px-4">
+      <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center px-4 gap-2">
         <h1
           className="text-white text-4xl md:text-6xl font-bold text-center animate-fade-in"
           style={{
@@ -27,6 +27,12 @@ export default function Hero() {
         >
           DazzledFangs
         </h1>
+        <p
+          className="text-white/40 text-xs tracking-widest text-center animate-fade-in"
+          style={{ opacity: isOpen ? 0 : 1, transition: 'opacity 0.3s ease-in-out' }}
+        >
+          Developed by DippsDev
+        </p>
       </div>
     </main>
   );

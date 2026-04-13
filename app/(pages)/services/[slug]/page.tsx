@@ -108,6 +108,19 @@ export default function BookingPage() {
     const [calMonth, setCalMonth] = useState(today.getMonth());
     const [calYear, setCalYear] = useState(today.getFullYear());
 
+    const isToday = (dateStr: string) => {
+        const t = new Date();
+        const todayStr = `${t.getFullYear()}-${String(t.getMonth() + 1).padStart(2, "0")}-${String(t.getDate()).padStart(2, "0")}`;
+        return dateStr === todayStr;
+    };
+
+    const isPastSlot = (slot: string) => {
+        if (!selectedDate || !isToday(selectedDate)) return false;
+        const [h, m] = slot.split(":").map(Number);
+        const now = new Date();
+        return h < now.getHours() || (h === now.getHours() && m <= now.getMinutes());
+    };
+
     const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
     const firstDay = new Date(calYear, calMonth, 1).getDay();
     const monthLabel = new Date(calYear, calMonth).toLocaleString("default", { month: "long", year: "numeric" });
@@ -307,16 +320,18 @@ export default function BookingPage() {
                                 <div className="grid grid-cols-3 gap-3 mb-8">
                                     {timeSlots.map((slot) => {
                                         const isBooked = bookedTimes.includes(slot);
+                                        const isPast = isPastSlot(slot);
+                                        const isDisabled = isBooked || isPast;
                                         const isChosen = selectedTime === slot;
                                         return (
                                             <button
                                                 key={slot}
-                                                disabled={isBooked}
+                                                disabled={isDisabled}
                                                 onClick={() => setSelectedTime(slot)}
                                                 className={`py-2.5 rounded-lg border text-sm font-medium transition-colors
                                                     ${isChosen ? "bg-gray-900 text-white border-gray-900" : ""}
-                                                    ${!isChosen && !isBooked ? "border-gray-200 text-gray-700 hover:bg-gray-50" : ""}
-                                                    ${isBooked ? "border-gray-100 text-gray-300 line-through cursor-not-allowed" : ""}`}
+                                                    ${!isChosen && !isDisabled ? "border-gray-200 text-gray-700 hover:bg-gray-50" : ""}
+                                                    ${isDisabled ? "border-gray-100 text-gray-300 line-through cursor-not-allowed" : ""}`}
                                             >
                                                 {slot}
                                             </button>
